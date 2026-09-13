@@ -2,7 +2,7 @@
 
 Plataforma para trámites comunales y atención vecinal. Proyecto desarrollado para **DSY1107 — Desarrollo Cloud Native I** (DuocUC).
 
-**Integrantes:** Camilo Queupilf · [Nombre del compañero/a]
+**Integrantes:** Camilo Queupil · Francisco Rodríguez
 **Evaluación actual:** EP1 — Encargo (16%) y EP2 — Presentación (24%)
 
 ---
