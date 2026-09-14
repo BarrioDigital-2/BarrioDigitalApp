@@ -1,0 +1,19 @@
+.requests-list {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem;
+}
+
+.error {
+  color: #b00020;
+}

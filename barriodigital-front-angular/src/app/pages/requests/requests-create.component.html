@@ -1,0 +1,23 @@
+<div class="requests-create">
+  <h1>Ingresar trámite</h1>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()">
+    <label>
+      Tipo de trámite
+      <input type="text" formControlName="tipoTramite" placeholder="CERTIFICADO_RESIDENCIA" />
+    </label>
+
+    <label>
+      Tu email
+      <input type="email" formControlName="vecinoEmail" placeholder="vecino@duocuc.cl" />
+    </label>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="enviando()">
+      {{ enviando() ? 'Enviando...' : 'Ingresar trámite' }}
+    </button>
+  </form>
+</div>

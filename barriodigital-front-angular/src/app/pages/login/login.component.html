@@ -1,0 +1,10 @@
+<div class="login-container">
+  <h1>BarrioDigital</h1>
+  <p>Plataforma de trámites comunales y atención vecinal</p>
+
+  @if (!isLoggedIn()) {
+    <button class="btn-microsoft" (click)="login()">Iniciar sesión con Microsoft</button>
+  } @else {
+    <p>Ya iniciaste sesión.</p>
+  }
+</div>
