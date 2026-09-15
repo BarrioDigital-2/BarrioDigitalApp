@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { filter } from 'rxjs';
@@ -14,6 +14,7 @@ import { filter } from 'rxjs';
 export class App implements OnInit {
   private readonly msalService = inject(MsalService);
   private readonly broadcastService = inject(MsalBroadcastService);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.msalService.instance.initialize().then(() => {
@@ -29,6 +30,7 @@ export class App implements OnInit {
         if (accounts.length > 0 && !this.msalService.instance.getActiveAccount()) {
           this.msalService.instance.setActiveAccount(accounts[0]);
         }
+        void this.router.navigateByUrl('/dashboard');
       });
 
     this.broadcastService.inProgress$
