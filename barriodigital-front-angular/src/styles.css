@@ -1,1 +1,71 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --color-bg: #f2f5f9;
+  --color-surface: #ffffff;
+  --color-primary: #2454a8;
+  --color-primary-dark: #173b7e;
+  --color-primary-light: #e8f0fd;
+  --color-text: #1c2430;
+  --color-text-muted: #667085;
+  --color-border: #e2e6ed;
+
+  --color-danger: #c0322a;
+  --color-danger-bg: #fbe9e8;
+  --color-success: #16794f;
+  --color-success-bg: #e3f6ec;
+  --color-warning: #a8620b;
+  --color-warning-bg: #fdf1e0;
+  --color-info: #3b5bc4;
+  --color-info-bg: #e9edfb;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 30, 50, 0.06);
+  --shadow-md: 0 6px 20px rgba(20, 30, 50, 0.08);
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button {
+  font-family: inherit;
+}

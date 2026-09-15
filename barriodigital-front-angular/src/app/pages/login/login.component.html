@@ -1,10 +1,21 @@
-<div class="login-container">
-  <h1>BarrioDigital</h1>
-  <p>Plataforma de trámites comunales y atención vecinal</p>
+<div class="login-page">
+  <div class="login-card">
+    <div class="brand-badge">BD</div>
+    <h1>BarrioDigital</h1>
+    <p class="subtitle">Plataforma de trámites comunales y atención vecinal</p>
 
-  @if (!isLoggedIn()) {
-    <button class="btn-microsoft" (click)="login()">Iniciar sesión con Microsoft</button>
-  } @else {
-    <p>Ya iniciaste sesión.</p>
-  }
+    @if (!isLoggedIn()) {
+      <button class="btn-microsoft" (click)="login()">
+        <svg viewBox="0 0 21 21" width="18" height="18" aria-hidden="true">
+          <rect x="1" y="1" width="9" height="9" fill="#f25022" />
+          <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
+          <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
+          <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
+        </svg>
+        Iniciar sesión con Microsoft
+      </button>
+    } @else {
+      <p class="already-logged">Ya iniciaste sesión.</p>
+    }
+  </div>
 </div>

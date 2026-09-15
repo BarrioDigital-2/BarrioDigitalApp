@@ -2,33 +2,48 @@
   <h1>Trámites</h1>
 
   @if (cargando()) {
-    <p>Cargando...</p>
+    <p class="state-msg">Cargando...</p>
   }
 
   @if (error()) {
-    <p class="error">{{ error() }}</p>
+    <p class="state-msg error">{{ error() }}</p>
   }
 
   @if (!cargando() && tramites().length === 0 && !error()) {
-    <p>No hay trámites ingresados todavía.</p>
+    <p class="state-msg">No hay trámites ingresados todavía.</p>
   }
 
-  <table>
-    @for (tramite of tramites(); track tramite.id) {
-      <tr>
-        <td>{{ tramite.id }}</td>
-        <td>{{ tramite.tipoTramite }}</td>
-        <td>{{ tramite.vecinoEmail }}</td>
-        <td>{{ tramite.estado }}</td>
-        <td>
-          @if (tramite.estado === 'INGRESADO') {
-            <button (click)="admitir(tramite)">Admitir</button>
+  @if (tramites().length > 0) {
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Vecino</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tramite of tramites(); track tramite.id) {
+            <tr>
+              <td>{{ tramite.id }}</td>
+              <td>{{ tramite.tipoTramite }}</td>
+              <td>{{ tramite.vecinoEmail }}</td>
+              <td><span class="badge" [ngClass]="estadoClass(tramite.estado)">{{ tramite.estado }}</span></td>
+              <td class="actions">
+                @if (tramite.estado === 'INGRESADO') {
+                  <button class="btn-primary" (click)="admitir(tramite)">Admitir</button>
+                }
+                @if (tramite.estado === 'ADMITIDO' || tramite.estado === 'EN_GESTION' || tramite.estado === 'EN_TERRENO') {
+                  <button class="btn-primary" (click)="resolver(tramite)">Marcar resuelto</button>
+                }
+              </td>
+            </tr>
           }
-          @if (tramite.estado === 'ADMITIDO' || tramite.estado === 'EN_GESTION' || tramite.estado === 'EN_TERRENO') {
-            <button (click)="resolver(tramite)">Marcar resuelto</button>
-          }
-        </td>
-      </tr>
-    }
-  </table>
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

@@ -1,10 +1,12 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { TramitesService } from '../../services/tramites.service';
 import { EstadoTramite, Tramite } from '../../models/tramite.model';
 
 @Component({
   selector: 'app-requests-list',
   standalone: true,
+  imports: [NgClass],
   templateUrl: './requests-list.component.html',
   styleUrl: './requests-list.component.css',
 })
@@ -48,5 +50,17 @@ export class RequestsListComponent implements OnInit {
       next: () => this.cargarTramites(),
       error: () => this.error.set('No se pudo cambiar el estado del trámite.'),
     });
+  }
+
+  estadoClass(estado: EstadoTramite): string {
+    const clases: Record<EstadoTramite, string> = {
+      INGRESADO: 'badge-info',
+      ADMITIDO: 'badge-info',
+      EN_GESTION: 'badge-warning',
+      EN_TERRENO: 'badge-warning',
+      RESUELTO: 'badge-success',
+      RECHAZADO: 'badge-danger',
+    };
+    return clases[estado];
   }
 }
