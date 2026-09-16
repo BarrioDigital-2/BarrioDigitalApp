@@ -35,10 +35,13 @@ Los microservicios `catalog`, `notify`, `report` y `audit` (que requieren Rabbit
 Usuario → Login MSAL (Azure AD) → Angular obtiene JWT
    → Angular llama al BFF con Authorization: Bearer <JWT>
    → BFF valida issuer + audience + firma + rol
-   → BFF reenvía a ms-barriodigital-requests
+   → BFF reenvía a ms-barriodigital-requests (mismo JWT en Authorization)
+   → ms-barriodigital-requests valida issuer + audience + firma
 ```
 
-Ningún microservicio de dominio se expone directo al frontend; todo pasa por el BFF.
+Ningún microservicio de dominio se expone directo al frontend; todo pasa por el BFF. El microservicio `requests` no debe quedar abierto en el Security Group de EC2 (solo `127.0.0.1:8081`).
+
+Guía de despliegue: [`docs/DESPLIEGUE-EC2.md`](./docs/DESPLIEGUE-EC2.md).
 
 ## 4. Requisitos previos
 
@@ -50,11 +53,17 @@ Ningún microservicio de dominio se expone directo al frontend; todo pasa por el
 
 ## 5. Cómo levantar el proyecto en local
 
+### 5.0 Configuración (una vez)
+
+1. Copia `.env.example` y exporta las variables (PowerShell: `$env:AZURE_TENANT_ID="..."`).
+2. En el frontend, edita `barriodigital-front-angular/src/environments/environment.ts` con tu `clientId`, `tenantId` y URLs (plantilla en `environment.example.ts`).
+3. Opcional: `docker compose up -d` levanta MySQL en el puerto 3306.
+
 ### 5.1 Base de datos
 
 ```bash
-# La app crea la BD sola (createDatabaseIfNotExist=true), solo necesitas MySQL corriendo
-# y el usuario/clave configurados como variables de entorno (ver 5.2)
+docker compose up -d
+# La app crea la BD sola (createDatabaseIfNotExist=true) si MySQL está accesible.
 ```
 
 ### 5.2 `ms-barriodigital-requests` (puerto 8081)
@@ -91,10 +100,15 @@ Luego abrir `http://localhost:4200` — debe redirigir al login de Microsoft.
 1. Crear/usar un tenant en Azure AD (Microsoft Entra ID).
 2. Registrar la app **BarrioDigital**, tipo **SPA**, redirect URI `http://localhost:4200`.
 3. En "Exponer una API", crear el scope `access_as_user` (queda como `api://<API_CLIENT_ID>`).
-4. Crear los **App roles**: `Admin`, `Funcionario`, `Vecino`, `Auditor`.
-5. Crear usuarios de prueba y asignarles rol en "Usuarios y grupos".
+4. Crear los **App roles**: `Admin`, `Funcionario`, `Vecino`, `Auditor` (respetar mayúsculas; el BFF y los guards los usan tal cual).
+5. En **Token configuration** → **Add optional claim** → token **Access** → claim `roles`, para que el BFF pueda autorizar por rol al validar el Bearer token.
+6. Crear usuarios de prueba y asignarles rol en "Usuarios y grupos".
 
-Con el `Directory (tenant) ID` y el `Application (client) ID` se completan las variables de entorno de la sección 5.
+Con el `Directory (tenant) ID` y el `Application (client) ID` completa:
+
+- Variables de entorno de la sección 5 (`AZURE_*`, `DB_*`, `CORS_ALLOWED_ORIGINS`).
+- `barriodigital-front-angular/src/environments/environment.ts` (desarrollo).
+- `environment.prod.ts` antes del build para EC2/API Gateway.
 
 ## 7. Usuarios de prueba
 
@@ -121,7 +135,7 @@ BarrioDigitalApp/
 - [x] Estructura del monorepo
 - [x] Backend: entidad, repository, service, controller de `requests`
 - [x] BFF: validación de JWT (issuer/audience/firma) y reenvío por rol
-- [ ] Frontend: integración MSAL (login, guards, interceptor)
-- [ ] Frontend: vistas de trámites conectadas al BFF
-- [ ] Prueba end-to-end en local
-- [ ] Despliegue en AWS (EC2 + API Gateway) para EP2
+- [x] Frontend: integración MSAL (login, guards, interceptor)
+- [x] Frontend: vistas de trámites conectadas al BFF
+- [ ] Prueba end-to-end en local (requiere MySQL + Azure AD configurado)
+- [ ] Despliegue en AWS (EC2 + API Gateway) — mencionado en la pauta EP1, típico de EP2

@@ -1,5 +1,6 @@
 /**
- * Build de desarrollo (`ng serve` / `ng build` por defecto).
+ * Desarrollo local. Copia desde environment.example.ts si necesitas
+ * apuntar a tus propios valores de Azure AD.
  */
 export const environment = {
   production: false,
