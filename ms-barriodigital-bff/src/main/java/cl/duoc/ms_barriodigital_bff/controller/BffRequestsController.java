@@ -18,25 +18,25 @@ public class BffRequestsController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('VECINO', 'FUNCIONARIO')")
+    @PreAuthorize("hasAnyRole('Vecino', 'Funcionario')")
     public ResponseEntity<Object> crear(@RequestBody Map<String, Object> body) {
         return requestsClient.crear(body);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('VECINO', 'FUNCIONARIO', 'ADMIN', 'AUDITOR')")
+    @PreAuthorize("hasAnyRole('Vecino', 'Funcionario', 'Admin', 'Auditor')")
     public ResponseEntity<Object> obtener(@PathVariable Long id) {
         return requestsClient.obtenerPorId(id);
     }
 
     @PutMapping("/{id}/status")
-    @PreAuthorize("hasAnyRole('FUNCIONARIO', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('Funcionario', 'Admin')")
     public ResponseEntity<Object> cambiarEstado(@PathVariable Long id, @RequestBody Map<String, Object> body) {
         return requestsClient.cambiarEstado(id, body);
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('FUNCIONARIO', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('Funcionario', 'Admin')")
     public ResponseEntity<Object> listar(@RequestParam(required = false) String status) {
         return requestsClient.listar(status);
     }

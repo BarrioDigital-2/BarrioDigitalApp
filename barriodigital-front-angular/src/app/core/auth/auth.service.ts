@@ -19,6 +19,10 @@ export class AuthService {
 
   readonly isLoggedIn = computed(() => this.activeAccount() !== null);
   readonly displayName = computed(() => this.activeAccount()?.name ?? '');
+  readonly roles = computed((): Rol[] => {
+    const claims = this.activeAccount()?.idTokenClaims as { roles?: Rol[] } | undefined;
+    return claims?.roles ?? [];
+  });
 
   constructor() {
     this.broadcastService.inProgress$
@@ -38,12 +42,10 @@ export class AuthService {
 
   /** Roles asignados al usuario, extraidos del claim "roles" del ID token. */
   getRoles(): Rol[] {
-    const claims = this.activeAccount()?.idTokenClaims as { roles?: Rol[] } | undefined;
-    return claims?.roles ?? [];
+    return this.roles();
   }
 
   hasAnyRole(allowed: Rol[]): boolean {
-    const roles = this.getRoles();
-    return roles.some((rol) => allowed.includes(rol));
+    return this.roles().some((rol) => allowed.includes(rol));
   }
 }

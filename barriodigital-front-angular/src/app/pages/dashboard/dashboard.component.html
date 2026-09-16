@@ -3,7 +3,7 @@
     <div>
       <h1>Hola, {{ displayName() }}</h1>
       <p class="roles">
-        @for (rol of roles; track rol) {
+        @for (rol of roles(); track rol) {
           <span class="badge">{{ rol }}</span>
         } @empty {
           <span class="muted">Sin roles asignados</span>
@@ -14,7 +14,7 @@
   </header>
 
   <div class="cards">
-    @if (esAdmin || esFuncionario) {
+    @if (esAdmin() || esFuncionario()) {
       <section class="card">
         <h2>Gestión de trámites</h2>
         <p>Revisa la cola de trámites y cambia su estado.</p>
@@ -22,7 +22,7 @@
       </section>
     }
 
-    @if (esVecino) {
+    @if (esVecino()) {
       <section class="card">
         <h2>Mis trámites</h2>
         <p>Ingresa un nuevo trámite y sigue su estado.</p>
@@ -30,14 +30,14 @@
       </section>
     }
 
-    @if (esAuditor) {
+    @if (esAuditor()) {
       <section class="card">
         <h2>Auditoría</h2>
         <p>Vista de solo lectura, disponible en una evaluación posterior del caso.</p>
       </section>
     }
 
-    @if (!esAdmin && !esFuncionario && !esVecino && !esAuditor) {
+    @if (!esAdmin() && !esFuncionario() && !esVecino() && !esAuditor()) {
       <p>Tu cuenta no tiene un rol asignado en Azure AD. Pide que te asignen uno para ver el contenido de tu perfil.</p>
     }
   </div>

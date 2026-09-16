@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { ROLES } from '../../models/rol.model';
@@ -14,12 +14,12 @@ export class DashboardComponent {
   private readonly authService = inject(AuthService);
 
   readonly displayName = this.authService.displayName;
-  readonly roles = this.authService.getRoles();
+  readonly roles = this.authService.roles;
 
-  readonly esAdmin = this.roles.includes(ROLES.ADMIN);
-  readonly esFuncionario = this.roles.includes(ROLES.FUNCIONARIO);
-  readonly esVecino = this.roles.includes(ROLES.VECINO);
-  readonly esAuditor = this.roles.includes(ROLES.AUDITOR);
+  readonly esAdmin = computed(() => this.roles().includes(ROLES.ADMIN));
+  readonly esFuncionario = computed(() => this.roles().includes(ROLES.FUNCIONARIO));
+  readonly esVecino = computed(() => this.roles().includes(ROLES.VECINO));
+  readonly esAuditor = computed(() => this.roles().includes(ROLES.AUDITOR));
 
   logout(): void {
     this.authService.logout();
