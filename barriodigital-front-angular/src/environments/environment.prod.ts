@@ -5,12 +5,12 @@
 export const environment = {
   production: true,
   azure: {
-    clientId: 'REPLACE_AZURE_CLIENT_ID',
-    tenantId: 'REPLACE_AZURE_TENANT_ID',
-    redirectUri: 'REPLACE_FRONTEND_PUBLIC_URL',
+    clientId: '8b0cc19f-2671-49c7-beff-816087690691',
+    tenantId: '92b9ffd8-4da1-4956-b85b-62654b654d25',
+    redirectUri: 'https://100.61.159.226',
   },
   bff: {
-    baseUrl: 'REPLACE_BFF_PUBLIC_URL',
+    baseUrl: 'https://o3p4thx9x8.execute-api.us-east-1.amazonaws.com/api',
     get scope(): string {
       return `api://${environment.azure.clientId}/access_as_user`;
     },
