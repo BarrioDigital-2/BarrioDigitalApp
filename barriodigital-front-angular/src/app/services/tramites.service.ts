@@ -12,7 +12,7 @@ import { CrearTramiteRequest, EstadoTramite, Tramite } from '../models/tramite.m
 @Injectable({ providedIn: 'root' })
 export class TramitesService {
     private readonly http = inject(HttpClient);
-    private readonly baseUrl = `${appConfig.bff.baseUrl}/api/bff/requests`;
+    private readonly baseUrl = `${appConfig.bff.baseUrl}/bff/requests`;
 
     crear(request: CrearTramiteRequest): Observable<Tramite> {
         return this.http.post<Tramite>(this.baseUrl, request);
